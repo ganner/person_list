@@ -1,0 +1,32 @@
+CREATE PROCEDURE `personlistdb`.`update_employee_sp` (IN employeeID int, IN rID int, IN mID int, IN description VARCHAR(24))
+
+BEGIN
+
+
+if rID != (SELECT r_ID FROM personlistdb.roles WHERE role_name = 'manager') then
+UPDATE personlistdb.employees
+SET managerID = null
+WHERE managerID = employeeID;
+
+end if;
+
+UPDATE personlistdb.employees
+SET roleID = rID, managerID = mID
+WHERE e_ID = employeeID;
+
+IF employeeID in (SELECT em_ID FROM personlistdb.employee_descriptions) THEN
+    IF rID = (SELECT r_ID FROM personlistdb.roles WHERE role_name = 'other') THEN
+    UPDATE personlistdb.employee_descriptions
+    SET employee_description = description
+	where em_ID = employeeID;
+    ELSE
+    DELETE FROM personlistdb.employee_descriptions WHERE em_ID = employeeID;
+    END IF;
+ELSE IF rID = (SELECT r_ID FROM personlistdb.roles WHERE role_name = 'other') THEN
+    INSERT INTO personlistdb.employee_descriptions (em_ID,employee_description)
+    VALUES (employeeID,description);
+END IF;
+
+END IF;
+
+END

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+
+</head>
+<body>
+<h2>Person List</h2>
+<wicket:panel>
+    <form wicket:id="addingForm">
+        <table>
+            <tr>
+                <td>Введите фамилию</td>
+                <td>
+                    Введите имя
+                </td>
+                <td>
+                    Введите отчество
+                </td>
+                <td>
+                    Выберите дату рождения
+                </td>
+                <td>Выбрите дату принятия на работу</td>
+                <td>Выберите менеджера</td>
+                <td>Выберите роль</td>
+            </tr>
+            <tr>
+                <td>
+                    <input wicket:id="personSurname"/>
+                </td>
+                <td>
+                    <input wicket:id="personName"/>
+                </td>
+                <td>
+                    <input wicket:id="personSecondName"/>
+                </td>
+                <td>
+                    <input type="text" wicket:id="personDateOfBirth">
+                </td>
+                <td>
+                    <input type="text" wicket:id="personHireDate">
+                </td>
+                <td>
+                    <select wicket:id="managerSelect">
+
+                    </select>
+                </td>
+                <td>
+                    <select wicket:id="roleSelect"></select>
+                </td>
+                <td>
+                    <textarea wicket:id="employeeDescription"></textarea>
+                </td>
+                <td>
+                    <button type="submit" wicket:id="save">Сохранить</button>
+                </td>
+            </tr>
+
+
+        </table>
+
+    </form>
+
+</wicket:panel>
+<!--<form wicket:id="form">-->
+<!--<input wicket:id="input" /> <a href="#" wicket:id="send">Send-->
+<!--message</a>-->
+<!--</form>-->
+</body>
+</html>

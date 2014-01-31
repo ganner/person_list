@@ -1,0 +1,14 @@
+CREATE TRIGGER delete_employee_trigger BEFORE DELETE on personlistdb.employees
+FOR EACH ROW
+BEGIN
+
+DELETE FROM personlistdb.employee_descriptions
+WHERE employee_descriptions.em_ID = old.e_ID;
+
+
+END
+
+
+
+
+
