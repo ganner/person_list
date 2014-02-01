@@ -3,10 +3,18 @@ CREATE PROCEDURE `personlistdb`.`insert_employee_sp` (IN sn VARCHAR(24), IN n VA
 
 BEGIN
 
+
+
 declare EmployeeID int;
+declare manID int;
+
+IF mid = 0 THEN
+SET manID = null;
+else SET manID = mid;
+END IF;
 
 INSERT INTO personlistdb.employees (surname, name, secondName, date_of_birth, hire_date, managerID, roleID)
-values (sn, n, s_n, dob, hd, mid, rid);
+values (sn, n, s_n, dob, hd, manID, rid);
 SET EmployeeID = LAST_INSERT_ID();
 IF  des IS not NULL then
 INSERT INTO personlistdb.employee_descriptions (em_ID, employee_description)

@@ -40,15 +40,20 @@ public class EmployeesDao implements PersonalListDao<Employee> {
      */
     @Override
     public void insertOne(Employee employee) throws NamingException, SQLException {
-        StringBuilder stringBuilder = new StringBuilder();
-        System.out.println(employee);
-        stringBuilder.append("call ");
-        stringBuilder.append(INSERT_EMPLOYEE_PROCEDURE);
-        stringBuilder.append("(");
-        stringBuilder.append("?, ?, ?, ?, ?, ?, ?, ?");
-        stringBuilder.append(" );");
         Connection connection = DBConnector.getInstance().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(stringBuilder.toString());
+        PreparedStatement preparedStatement = getPreparedStatementForInsert(connection);
+        fillPreparedStatementForInsert(employee, preparedStatement);
+        preparedStatement.executeUpdate();
+        connection.close();
+    }
+
+    /**
+     *
+     * @param employee is an employee, which is filled with data query
+     * @param preparedStatement is a prepared query which filling with data
+     * @throws SQLException
+     */
+    private void fillPreparedStatementForInsert(Employee employee, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setString(1, employee.getSurname());
         preparedStatement.setString(2, employee.getName());
         preparedStatement.setString(3, employee.getSecondName());
@@ -65,7 +70,38 @@ public class EmployeesDao implements PersonalListDao<Employee> {
         } else {
             preparedStatement.setNull(8, Types.VARCHAR);
         }
-        preparedStatement.executeUpdate();
+    }
+
+    /**
+     *
+     * @param connection an jdbc connection
+     * @return
+     * @throws SQLException
+     */
+    private PreparedStatement getPreparedStatementForInsert(Connection connection) throws SQLException {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("call ");
+        stringBuilder.append(INSERT_EMPLOYEE_PROCEDURE);
+        stringBuilder.append("(");
+        stringBuilder.append("?, ?, ?, ?, ?, ?, ?, ?");
+        stringBuilder.append(" );");
+        return connection.prepareStatement(stringBuilder.toString());
+    }
+
+    /**
+     *
+     * @param listOfEmployee list of employees inserted to DB
+     * @throws NamingException
+     * @throws SQLException
+     */
+    public void insertAll(List<Employee> listOfEmployee) throws NamingException, SQLException {
+        Connection connection = DBConnector.getInstance().getConnection();
+        PreparedStatement preparedStatementForInsert = getPreparedStatementForInsert(connection);
+        for(Employee e : listOfEmployee){
+            fillPreparedStatementForInsert(e,preparedStatementForInsert);
+            preparedStatementForInsert.addBatch();
+        }
+        preparedStatementForInsert.executeBatch();
         connection.close();
     }
 
@@ -163,5 +199,9 @@ public class EmployeesDao implements PersonalListDao<Employee> {
         }
         connection.close();
         return listOfEmployee;
+    }
+
+    private void insertEmployeeMethodBody(){
+
     }
 }

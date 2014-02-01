@@ -9,7 +9,9 @@ import com.personlist.model.pojo.Employee;
 import com.personlist.model.pojo.ManagerInfo;
 import com.personlist.model.pojo.Role;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.mapper.CannotResolveClassException;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
@@ -149,7 +151,7 @@ public class HomePage extends WebPage {
         AjaxLink toXmlButton = new AjaxLink("toXml") {
             @Override
             public void onClick(AjaxRequestTarget target) {
-                XStream xStream = new XStream(new DomDriver());
+                XStream xStream = new XStream(new DomDriver("UTF-8"));
                 xStream.alias("employee",Employee.class);
                 xStream.alias("manager",ManagerInfo.class);
                 xStream.alias("role",Role.class);
@@ -164,28 +166,34 @@ public class HomePage extends WebPage {
             @SuppressWarnings("unchecked")
             protected void onSubmit() {
                 super.onSubmit();
+
+
+
+            }
+        };
+        AjaxButton uploadButton = new AjaxButton("uploadButton",new Model<>("Загрузить файл с списком сотрудников"),uploadForm) {
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                super.onSubmit(target, form);
                 FileUpload fileUpload = xmlUploadField.getFileUpload();
                 XStream xStream = new XStream();
                 xStream.alias("employee",Employee.class);
                 xStream.alias("manager",ManagerInfo.class);
                 xStream.alias("role",Role.class);
                 try {
-                List<Employee> obj = (List<Employee>)xStream.fromXML(fileUpload.getInputStream());
-                    for(Employee e : obj){
-                        System.out.println(e.getId());
-                    }
+                    EmployeesDao.getInstance().insertAll((List<Employee>)xStream.fromXML(fileUpload.getInputStream()));
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NamingException e) {
+                    e.printStackTrace();
+                } catch (ConversionException e){
+                    target.appendJavaScript("alert('Некорректный тег в xml')");
+                }catch (Throwable throwable){
+                    target.appendJavaScript("alert('Некорректно построеный XML')");
                 }
 
-
-
-            }
-        };
-        AjaxButton uploadButton = new AjaxButton("uploadButton",new Model("Загрузить файл с списком сотрудников"),uploadForm) {
-            @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                super.onSubmit(target, form);
             }
         };
         uploadForm.setMultiPart(true);
