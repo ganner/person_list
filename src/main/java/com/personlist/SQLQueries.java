@@ -1,11 +1,7 @@
 package com.personlist;
 
 /**
- * Created with IntelliJ IDEA.
- * User: DAP
- * Date: 26.01.14
- * Time: 14:12
- * To change this template use File | Settings | File Templates.
+ * SQL queries constants
  */
 public class SQLQueries {
 
