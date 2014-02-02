@@ -2,10 +2,7 @@
 <!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">
 
 <Configure class="org.eclipse.jetty.server.Server">
-    <!--<Set name="contextPath">/personList</Set>-->
-    <!--<Set name="war">/opt/myapp/myapp.war</Set>-->
     <New id="mysqlDS" class="org.eclipse.jetty.plus.jndi.Resource">
-        <!--<Arg><Ref refid="wac"/></Arg>-->
         <Arg>jdbc/mysqlDS</Arg>
         <Arg>
             <New class="com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource">

@@ -21,5 +21,6 @@ public class PersonListApplication extends WebApplication {
     protected void init() {
         super.init();
         getMarkupSettings().setStripWicketTags(true);
+        getMarkupSettings().setDefaultMarkupEncoding("UTF-8");
     }
 }
