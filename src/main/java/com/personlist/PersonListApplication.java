@@ -6,11 +6,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**
- * Created with IntelliJ IDEA.
- * User: DAP
- * Date: 26.01.14
- * Time: 15:54
- * To change this template use File | Settings | File Templates.
+ * main application class
  */
 public class PersonListApplication extends WebApplication {
     @Override

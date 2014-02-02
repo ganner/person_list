@@ -10,7 +10,7 @@ CREATE TABLE if not exists personlistdb.roles(
 CREATE TABLE if not exists personlistdb.employee_descriptions(
                 ed_ID int NOT NULL UNIQUE AUTO_INCREMENT,
                 em_ID int,
-                employee_description varchar(255),
+                employee_description varchar(1500),
                 PRIMARY KEY (ed_ID)
                 );
 CREATE TABLE if not exists personlistdb.employees(

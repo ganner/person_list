@@ -1,4 +1,4 @@
-CREATE PROCEDURE `personlistdb`.`update_employee_sp` (IN employeeID int, IN rID int, IN mID int, IN description VARCHAR(24))
+CREATE PROCEDURE `personlistdb`.`update_employee_sp` (IN employeeID int, IN rID int, IN mID int, IN description VARCHAR(1500))
 
 BEGIN
 

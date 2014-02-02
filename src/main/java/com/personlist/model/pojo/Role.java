@@ -3,11 +3,7 @@ package com.personlist.model.pojo;
 import com.personlist.model.PersonListEntity;
 
 /**
- * Created with IntelliJ IDEA.
- * User: DAP
- * Date: 27.01.14
- * Time: 2:00
- * To change this template use File | Settings | File Templates.
+ * pojo container class for Role
  */
 public class Role implements PersonListEntity {
     public String roleDescription;

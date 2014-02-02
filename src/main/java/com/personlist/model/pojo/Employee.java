@@ -6,11 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created with IntelliJ IDEA.
- * User: DAP
- * Date: 24.01.14
- * Time: 13:51
- * To change this template use File | Settings | File Templates.
+ * pojo container class for Employee
  */
 public class Employee implements PersonListEntity,Serializable {
 

@@ -1,7 +1,7 @@
 package com.personlist.view;
 
 import com.googlecode.wicket.jquery.core.Options;
-import com.personlist.comparator.HireDateComporator;
+import com.personlist.comparator.HireDateComparator;
 import com.personlist.comparator.SurnameComparator;
 import com.personlist.controller.EmployeeManipulator;
 import com.personlist.dao.EmployeesDao;
@@ -9,16 +9,10 @@ import com.personlist.dao.RolesDao;
 import com.personlist.model.pojo.Employee;
 import com.personlist.model.pojo.ManagerInfo;
 import com.personlist.model.pojo.Role;
-import com.personlist.xmlprocessing.XmlWorker;
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.ConversionException;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
-import com.thoughtworks.xstream.mapper.CannotResolveClassException;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.ajax.json.XML;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -40,12 +34,10 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import javax.naming.NamingException;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Class that representing main functional page
@@ -153,7 +145,7 @@ public class HomePage extends WebPage {
         AjaxLink sortByHireDate = new AjaxLink("sortByHireDate") {
             @Override
             public void onClick(AjaxRequestTarget target) {
-                Collections.sort(employees, new HireDateComporator());
+                Collections.sort(employees, new HireDateComparator());
                 target.add(containerForListOfPersons);
             }
         };
@@ -203,7 +195,7 @@ public class HomePage extends WebPage {
         uploadForm.setMultiPart(true);
         uploadForm.add(xmlUploadField);
         add(uploadForm);
-        listOfPersons.setItemsPerPage(15);
+        listOfPersons.setItemsPerPage(100);
         containerForListOfPersons.add(listOfPersons);
         add(containerForListOfPersons);
         add(new AddEmployeePanel("addPersonPanel", new Model<>(new Employee())));

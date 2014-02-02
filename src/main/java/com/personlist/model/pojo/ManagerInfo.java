@@ -1,11 +1,7 @@
 package com.personlist.model.pojo;
 
 /**
- * Created with IntelliJ IDEA.
- * User: DAP
- * Date: 27.01.14
- * Time: 1:16
- * To change this template use File | Settings | File Templates.
+ * pojo container class form manager info
  */
 public class ManagerInfo {
     public String surname;
