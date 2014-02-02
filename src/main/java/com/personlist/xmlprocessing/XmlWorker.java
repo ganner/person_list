@@ -10,13 +10,24 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by DAP on 02.02.14.
- */
+
 public class XmlWorker {
 
+    private static XmlWorker instance;
+
+    private XmlWorker(){
+
+    }
+
+    public static XmlWorker getInstance(){
+        if(instance == null){
+            instance = new XmlWorker();
+        }
+        return instance;
+    }
+
     @SuppressWarnings("unchecked")
-    public static <A> List<A> fromXML(Class<A> aClass, InputStream inputStream, XStream xStreamWithAlias) {
+    public  <A> List<A> fromXML(Class<A> aClass, InputStream inputStream, XStream xStreamWithAlias) {
         try (
                 Reader reader = new InputStreamReader(inputStream, Charset.forName("UTF-8"))
         ) {
@@ -37,8 +48,8 @@ public class XmlWorker {
         return null;
     }
 
-    public static boolean toXML(Object object, File file) {
-        XStream xStream = new XStream();
+    public  boolean toXML(Object object, File file,XStream streamWithAlias) {
+        XStream xStream = streamWithAlias;
         try (
                 OutputStream outputStream = new FileOutputStream(file);
                 Writer writer = new OutputStreamWriter(outputStream, Charset.forName("UTF-8"));
@@ -51,7 +62,7 @@ public class XmlWorker {
         return true;
     }
 
-    public static XStream createEmployeeAliasXStream(){
+    public  XStream createEmployeeAliasXStream(){
         XStream xStream = new XStream();
         xStream.alias("employee",Employee.class);
         xStream.alias("manager",ManagerInfo.class);
