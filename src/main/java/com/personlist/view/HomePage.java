@@ -85,6 +85,12 @@ public class HomePage extends WebPage {
                     if (!employee.getRole().getRoleDescription().equals("other")) {
                         employeeDescription.add(new AttributeAppender("disabled", new Model<>("true")));
                     }
+                    employeeDescription.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+                        @Override
+                        protected void onUpdate(AjaxRequestTarget target) {
+
+                        }
+                    });
                     employeeDescription.setOutputMarkupId(true);
                     DropDownChoice<Role> role = new DropDownChoice<>("roleSelect", new PropertyModel<Role>(employee, "role"), RolesDao.getInstance().getAll());
                     role.add(new AjaxFormComponentUpdatingBehavior("onchange") {
